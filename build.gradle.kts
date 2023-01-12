@@ -1,12 +1,14 @@
 plugins {
     kotlin("multiplatform") version "1.7.21"
     kotlin("plugin.serialization") version "1.7.20"
+    id("maven-publish")
 }
 
 group = "com.mfrancza"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
