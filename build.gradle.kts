@@ -61,3 +61,12 @@ kotlin {
         val nativeTest by getting
     }
 }
+
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().apply {
+        lockFileDirectory = project.rootDir.resolve("kotlin-js-store")
+    }
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().apply {
+        versions.karma.version = "6.4.1"
+    }
+}
