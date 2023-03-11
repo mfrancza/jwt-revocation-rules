@@ -52,8 +52,8 @@ publishing {
             name = "GitHubPackages"
             url = URI("https://maven.pkg.github.com/mfrancza/jwt-revocation-rules")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
             }
         }
     }
