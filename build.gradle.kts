@@ -1,3 +1,5 @@
+import java.net.URI
+
 plugins {
     kotlin("multiplatform") version "1.8.0"
     kotlin("plugin.serialization") version "1.8.0"
@@ -43,6 +45,20 @@ kotlin {
         val jsTest by getting
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = URI("https://maven.pkg.github.com/mfrancza/jwt-revocation-rules")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
 
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
     rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().apply {
