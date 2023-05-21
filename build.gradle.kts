@@ -6,7 +6,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.mfrancza"
+group = "io.github.mfrancza"
 version = "1.1.0-SNAPSHOT"
 
 repositories {
@@ -52,8 +52,16 @@ publishing {
             name = "GitHubPackages"
             url = URI("https://maven.pkg.github.com/mfrancza/jwt-revocation-rules")
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+        maven {
+            name = "OSSRH"
+            url = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
     }
