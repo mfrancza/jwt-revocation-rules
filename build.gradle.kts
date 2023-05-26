@@ -4,10 +4,11 @@ plugins {
     kotlin("multiplatform") version "1.8.0"
     kotlin("plugin.serialization") version "1.8.0"
     id("maven-publish")
+    id("dev.petuska.npm.publish") version "3.3.1"
 }
 
 group = "io.github.mfrancza"
-version = "1.1.0"
+version = "1.2.0-SNAPSHOT"
 
 repositories {
     mavenLocal()
@@ -63,6 +64,15 @@ publishing {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
             }
+        }
+    }
+}
+
+npmPublish {
+    registries {
+        register("npmjs") {
+            uri.set("https://registry.npmjs.org")
+            authToken.set(System.getenv("NPM_AUTH_TOKEN"))
         }
     }
 }
