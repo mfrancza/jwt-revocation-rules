@@ -19,6 +19,7 @@ kotlin {
     jvmToolchain(11)
     jvm()
     js {
+        compilations["main"].packageJson {}
         binaries.library()
         nodejs()
         browser()
@@ -70,5 +71,14 @@ npmPublish {
             uri.set("https://registry.npmjs.org")
             authToken.set(System.getenv("NPM_AUTH_TOKEN"))
         }
+    }
+}
+
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().apply {
+        lockFileDirectory = project.rootDir.resolve("kotlin-js-store")
+    }
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().apply {
+        versions.webpack.version = "5.76.0"
     }
 }
