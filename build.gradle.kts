@@ -1,7 +1,7 @@
 import java.net.URI
 
 plugins {
-    kotlin("multiplatform") version "1.8.0"
+    kotlin("multiplatform") version "1.8.21"
     kotlin("plugin.serialization") version "1.8.0"
     id("maven-publish")
     id("dev.petuska.npm.publish") version "3.3.1"
@@ -18,8 +18,11 @@ repositories {
 kotlin {
     jvmToolchain(11)
     jvm()
-    js(IR) {
+    js {
+        binaries.library()
         nodejs()
+        browser()
+        generateTypeScriptDefinitions()
     }
     
     sourceSets {
@@ -67,15 +70,5 @@ npmPublish {
             uri.set("https://registry.npmjs.org")
             authToken.set(System.getenv("NPM_AUTH_TOKEN"))
         }
-    }
-}
-
-
-rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().apply {
-        lockFileDirectory = project.rootDir.resolve("kotlin-js-store")
-    }
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().apply {
-        versions.karma.version = "6.4.1"
     }
 }
