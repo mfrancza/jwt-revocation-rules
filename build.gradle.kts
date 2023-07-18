@@ -1,8 +1,8 @@
 import java.net.URI
 
 plugins {
-    kotlin("multiplatform") version "1.8.21"
-    kotlin("plugin.serialization") version "1.8.0"
+    kotlin("multiplatform") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.0"
     id("maven-publish")
     id("dev.petuska.npm.publish") version "3.3.1"
 }
