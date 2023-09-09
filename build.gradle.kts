@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.0"
     id("maven-publish")
     id("dev.petuska.npm.publish") version "3.3.1"
+    id("signing")
 }
 
 group = "io.github.mfrancza"
@@ -44,6 +45,10 @@ kotlin {
     }
 }
 
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
+
 publishing {
     repositories {
         maven {
@@ -71,6 +76,46 @@ publishing {
             }
         }
     }
+
+    publications.withType<MavenPublication> {
+
+        // Stub javadoc.jar artifact
+        artifact(javadocJar.get())
+
+        // Provide artifacts information requited by Maven Central
+        pom {
+            name.set("JWT Revocation Rules")
+            description.set("Multiplatform library for describing and applying JWT revocation rules managed by the jwt-revocation-manager.")
+            url.set("https://github.com/mfrancza/jwt-revocation-rules")
+
+            licenses {
+                license {
+                    name.set("Apache License 2.0")
+                    url.set("http://www.apache.org/licenses/LICENSE-2.0")
+                }
+            }
+            developers {
+                developer {
+                    id.set("mfrancza")
+                    name.set("Matt Franczak")
+                    email.set("mfrancza@gmail.com")
+                }
+            }
+            scm {
+                url.set("https://github.com/mfrancza/jwt-revocation-rules")
+            }
+
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("SIGNING_KEY_ID"),
+        System.getenv("SIGNING_KEY"),
+        System.getenv("SIGNING_PASSWORD")
+    )
+    sign(publishing.publications)
 }
 
 npmPublish {
