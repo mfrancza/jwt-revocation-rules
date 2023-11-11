@@ -1,8 +1,11 @@
 package com.mfrancza.jwtrevocation.rules
 
+import kotlinx.serialization.Serializable
+
 /**
  * Basic implementation of a ClaimsSource as data class
  */
+@Serializable
 data class Claims  (
     val iss: String? = null,
     val sub: String? = null,
